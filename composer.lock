@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "shipsaas/never-throw",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/shipsaas/never-throw.git",
-                "reference": "3567e0e235dc25ff5cf2a7b54cb071f5836735e9"
+                "reference": "5db0a25f1ec098fb991588ed0ac390647d6eedc5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/shipsaas/never-throw/zipball/3567e0e235dc25ff5cf2a7b54cb071f5836735e9",
-                "reference": "3567e0e235dc25ff5cf2a7b54cb071f5836735e9",
+                "url": "https://api.github.com/repos/shipsaas/never-throw/zipball/5db0a25f1ec098fb991588ed0ac390647d6eedc5",
+                "reference": "5db0a25f1ec098fb991588ed0ac390647d6eedc5",
                 "shasum": ""
             },
             "require": {
@@ -53,9 +53,9 @@
             ],
             "support": {
                 "issues": "https://github.com/shipsaas/never-throw/issues",
-                "source": "https://github.com/shipsaas/never-throw/tree/v1.0.0"
+                "source": "https://github.com/shipsaas/never-throw/tree/v1.0.1"
             },
-            "time": "2023-04-12T16:27:44+00:00"
+            "time": "2023-04-15T02:27:21+00:00"
         }
     ],
     "packages-dev": [

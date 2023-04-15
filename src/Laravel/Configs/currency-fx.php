@@ -4,6 +4,7 @@ return [
     'drivers' => [
         'exchangeratesapi-io' => [
             'host' => env('FX_EXCHANGER_RATES_API_IO_HOST', 'https://api.apilayer.com/exchangerates_data'),
+            'api-key' => env('FX_EXCHANGER_RATES_API_IO_API_KEY'),
         ],
 
         /**
