@@ -10,10 +10,14 @@ class CurrencyFxClient
 {
     private Client $client;
 
-    public static function getClient(string $baseUrl, array $headers = []): self
-    {
+    public static function getClient(
+        string $baseUrl,
+        array $headers = [],
+        array $guzzleOptions = []
+    ): self {
         $fxClient = new self();
         $fxClient->client = new Client([
+            ...$guzzleOptions,
             'base_uri' => $baseUrl,
             'headers' => [
                 'User-Agent' => 'CurrencyFxHTTP/1',
@@ -37,7 +41,7 @@ class CurrencyFxClient
         } catch (ClientException | ServerException $exception) {
             $response->isOk = false;
             $response->statusCode = $exception->getResponse()->getStatusCode();
-            $response->response = json_decode($exception->getResponse(), true)
+            $response->response = json_decode($exception->getResponse()->getBody(), true)
                 ?: ((string) $exception->getResponse()->getBody());
         }
 

@@ -1,0 +1,9 @@
+{
+  "base": "USD",
+  "date": "2022-04-14",
+  "rates": {
+    "EUR": 0.813399
+  },
+  "success": true,
+  "timestamp": 1519296206
+}

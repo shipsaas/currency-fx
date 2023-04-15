@@ -23,7 +23,7 @@ Simply initialize the class with the required params. And it is ready to use in 
 
 ```php
 $service = new CurrencyCloudService($host, $loginId, $apiKey);
-$rate = $service->getRates('USD', 'SGD');
+$rate = $service->getRates('USD', 'SGD'); // 1.4xxx (float)
 ```
 
 ## Laravel Integration
@@ -66,6 +66,29 @@ class TransferService
     }
 }
 ```
+
+## Tests
+
+We love tests, always. We have 3 kind of test cases:
+
+- Unit Tests
+- Integration Tests
+- E2E Tests
+
+Check out the [TEST-README.md](./tests/README.md) to learn more!
+
+## Contribute to the project
+
+- All changes must follow PSR-1 / PSR-12 coding conventions.
+- Unit testing is a must, cover things as much as you can.
+
+Feel free to add more driver and share it to the whole PHP community 😆
+
+## This library is useful?
+
+Thank you, please give it a ⭐️⭐️⭐️ to support the project.
+
+Don't forget to share with your friends & colleagues, so they can also build their own SaaS products as well 🚀
 
 ## License
 MIT LICENSE

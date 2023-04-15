@@ -2,6 +2,7 @@
 
 namespace CurrencyFX\Laravel;
 
+use CurrencyFX\CurrencyFx;
 use CurrencyFX\Services\CurrencyCloudService;
 use CurrencyFX\Services\CurrencyLayerService;
 use CurrencyFX\Services\ExchangerRateHostService;
@@ -14,7 +15,7 @@ class CurrencyFxServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        AboutCommand::add('ShipSaaS/Currency-FX', fn () => ['Version' => '1.0.0']);
+        AboutCommand::add('ShipSaaS/Currency-FX', fn () => ['Version' => CurrencyFx::VERSION]);
 
         $this->mergeConfigFrom(
             __DIR__ . '/Configs/currency-fx.php',
@@ -30,32 +31,37 @@ class CurrencyFxServiceProvider extends ServiceProvider
     {
         $this->app->singleton(CurrencyCloudService::class, function () {
             return new CurrencyCloudService(
-                config('currency-fx.currencycloud.host'),
-                config('currency-fx.currencycloud.login-id'),
-                config('currency-fx.currencycloud.api-key')
+                config('currency-fx.drivers.currencycloud.host'),
+                config('currency-fx.drivers.currencycloud.login-id'),
+                config('currency-fx.drivers.currencycloud.api-key')
             );
         });
 
-        $this->app->singleton(ExchangerRateHostService::class);
+        $this->app->singleton(ExchangerRateHostService::class, function () {
+            return new ExchangerRateHostService(
+                config('currency-fx.drivers.exchangerate-host.host'),
+                'free-api'
+            );
+        });
 
         $this->app->singleton(CurrencyLayerService::class, function () {
             return new CurrencyLayerService(
-                config('currency-fx.currencylayer.host'),
-                config('currency-fx.currencylayer.api-key')
+                config('currency-fx.drivers.currencylayer.host'),
+                config('currency-fx.drivers.currencylayer.api-key')
             );
         });
 
         $this->app->singleton(FixerIoService::class, function () {
-            return new CurrencyLayerService(
-                config('currency-fx.fixer-io.host'),
-                config('currency-fx.fixer-io.api-key')
+            return new FixerIoService(
+                config('currency-fx.drivers.fixer-io.host'),
+                config('currency-fx.drivers.fixer-io.api-key')
             );
         });
 
         $this->app->singleton(ExchangerRatesApiIoService::class, function () {
-            return new CurrencyLayerService(
-                config('currency-fx.exchangeratesapi-io.host'),
-                config('currency-fx.exchangeratesapi-io.api-key')
+            return new ExchangerRatesApiIoService(
+                config('currency-fx.drivers.exchangeratesapi-io.host'),
+                config('currency-fx.drivers.exchangeratesapi-io.api-key')
             );
         });
     }

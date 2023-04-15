@@ -11,7 +11,7 @@ use CurrencyFX\Services\Outcomes\GetRateResult;
 
 class ExchangerRatesApiIoService implements ExternalCurrencyRateInterface
 {
-    private CurrencyFxClient $httpClient;
+    protected CurrencyFxClient $httpClient;
 
     public function __construct(
         private string $host,
@@ -35,6 +35,6 @@ class ExchangerRatesApiIoService implements ExternalCurrencyRateInterface
             return GetRateResult::error(new GetRateErrorResult(GetRateErrorOutcome::RETRIEVE_RATE_FAILED));
         }
 
-        return GetRateResult::ok(new GetRateOkResult($getRate['rates'][$toCurrency]));
+        return GetRateResult::ok(new GetRateOkResult($getRate->response['rates'][$toCurrency]));
     }
 }

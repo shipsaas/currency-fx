@@ -1,0 +1,16 @@
+{
+  "settlement_cut_off_time": "2022-02-02T15:00:00Z",
+  "currency_pair": "GBPUSD",
+  "client_buy_currency": "GBP",
+  "client_sell_currency": "USD",
+  "client_buy_amount": "100.0",
+  "client_sell_amount": "140.81",
+  "fixed_side": "buy",
+  "client_rate": "1.4081",
+  "partner_rate": null,
+  "core_rate": "1.4081",
+  "deposit_required": false,
+  "deposit_amount": "0.0",
+  "deposit_currency": "USD",
+  "mid_market_rate": "1.408"
+}

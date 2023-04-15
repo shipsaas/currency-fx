@@ -37,6 +37,6 @@ class CurrencyLayerService implements ExternalCurrencyRateInterface
 
         $pair = $fromCurrency . $toCurrency;
 
-        return GetRateResult::ok(new GetRateOkResult($getRate['quotes'][$pair]));
+        return GetRateResult::ok(new GetRateOkResult($getRate->response['quotes'][$pair]));
     }
 }
