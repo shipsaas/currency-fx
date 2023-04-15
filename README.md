@@ -4,13 +4,18 @@ A PHP Library handles Currency FX (rates & conversions) with ease. Available for
 
 Tired of implementing these and integrate with 3rd services? Let's CurrencyFX help you to do that. Covered by Unit Testing & battle-tested!
 
-## Available Services
+## Available Services / Batteries
 - https://exchangeratesapi.io/
 - https://exchangerate.host/
 - https://fixer.io/
 - https://currencylayer.com/
 - https://www.currencycloud.com/
 
-## Implement your own Service
+## Supports
+- PHP 8.1+
 
-Coming soon
+## Laravel Integration
+
+Requirement: Laravel 10+
+
+Just simply install the package and lets Laravel discovery magic happens 🥰
