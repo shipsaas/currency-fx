@@ -4,6 +4,7 @@ namespace CurrencyFX\Services;
 
 use CurrencyFX\Contracts\ExternalCurrencyRateInterface;
 use CurrencyFX\Enums\GetRateErrorOutcome;
+use CurrencyFX\Services\HttpClient\CurrencyFxClient;
 use CurrencyFX\Services\Outcomes\GetRateErrorResult;
 use CurrencyFX\Services\Outcomes\GetRateOkResult;
 use CurrencyFX\Services\Outcomes\GetRateResult;
@@ -11,12 +12,14 @@ use CurrencyFX\Services\Outcomes\GetRateResult;
 class CurrencyCloudService implements ExternalCurrencyRateInterface
 {
     private readonly string $authToken;
+    private CurrencyFxClient $httpClient;
 
     public function __construct(
-        public string $host,
-        public string $loginId,
-        public string $apiKey
+        private readonly string $host,
+        private readonly string $loginId,
+        private readonly string $apiKey
     ) {
+        $this->httpClient = CurrencyFxClient::getClient($this->host);
     }
 
     private function getAuthToken(): bool
@@ -25,6 +28,25 @@ class CurrencyCloudService implements ExternalCurrencyRateInterface
             return true;
         }
 
+        $authResponse = $this->httpClient->request('POST', 'v2/authenticate/api', [
+            'multipart' => [
+                [
+                    'name' => 'login_id',
+                    'contents' => $this->loginId,
+                ],
+                [
+                    'name' => 'api_key',
+                    'contents' => $this->apiKey,
+                ],
+            ],
+        ]);
+
+        if ($authResponse->isOk) {
+            return false;
+        }
+
+        $this->authToken = $authResponse->response['auth_token'];
+
         return true;
     }
 
@@ -32,6 +54,22 @@ class CurrencyCloudService implements ExternalCurrencyRateInterface
     {
         if (!$this->getAuthToken()) {
             return GetRateResult::error(new GetRateErrorResult(GetRateErrorOutcome::AUTHENTICATION_FAILED));
+        }
+
+        $getRate = $this->httpClient->request('GET', 'v2/rates/detailed', [
+             'headers' => [
+                 'X-Auth-Token' => $this->authToken,
+             ],
+            'query' => [
+                'sell_currency' => $fromCurrency,
+                'buy_currency' => $toCurrency,
+                'fixed_side' => 'sell',
+                'amount' => 10_000,
+            ],
+        ]);
+
+        if (!$getRate->isOk) {
+            return GetRateResult::error(new GetRateErrorResult(GetRateErrorOutcome::RETRIEVE_RATE_FAILED));
         }
 
         return GetRateResult::ok(new GetRateOkResult(1, 1));

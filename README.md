@@ -14,6 +14,9 @@ Tired of implementing these and integrate with 3rd services? Let's CurrencyFX he
 ## Supports
 - PHP 8.1+
 
+## Dependencies
+- Guzzle for API Requests
+
 ## Usage
 
 Simply initialize the class with the required params. And it is ready to use in no time.
