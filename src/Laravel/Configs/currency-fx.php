@@ -7,11 +7,10 @@ return [
             'api-key' => env('FX_EXCHANGER_RATES_API_IO_API_KEY'),
         ],
 
-        /**
-         * @see https://exchangerate.host/
-         * @note Free Service so no configuration
-         */
-        'exchangerate-host' => [],
+        'exchangerate-host' => [
+            'host' => env('FX_EXCHANGER_RATE_HOST_HOST', 'https://api.exchangerate.host/latest'),
+            'api-key' => null,
+        ],
 
         'fixer-io' => [
             'host' => env('FX_FIXER_IO_HOST', 'https://api.apilayer.com/fixer'),

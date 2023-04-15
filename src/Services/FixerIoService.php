@@ -3,19 +3,14 @@
 namespace CurrencyFX\Services;
 
 use CurrencyFX\Contracts\ExternalCurrencyRateInterface;
-use CurrencyFX\Services\Outcomes\GetRateOkResult;
-use CurrencyFX\Services\Outcomes\GetRateResult;
 
-class FixerIoService implements ExternalCurrencyRateInterface
+/**
+ * Based on the documentation, it is having the same approach to get the rate
+ *
+ * So we only need to pass the correct config, and it should work
+ *
+ * @see https://apilayer.com/marketplace/fixer-api#endpoints
+ */
+class FixerIoService extends ExchangerRatesApiIoService implements ExternalCurrencyRateInterface
 {
-    public function __construct(
-        private string $host,
-        private string $apiKey
-    ) {
-    }
-
-    public function getRates(string $fromCurrency, string $toCurrency): GetRateResult
-    {
-        return GetRateResult::ok(new GetRateOkResult(1, 1));
-    }
 }

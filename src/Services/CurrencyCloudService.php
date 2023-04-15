@@ -72,6 +72,25 @@ class CurrencyCloudService implements ExternalCurrencyRateInterface
             return GetRateResult::error(new GetRateErrorResult(GetRateErrorOutcome::RETRIEVE_RATE_FAILED));
         }
 
-        return GetRateResult::ok(new GetRateOkResult(1, 1));
+        $resolvedRate = $this->transformRate($getRate->response, $fromCurrency, $toCurrency);
+
+        return GetRateResult::ok(new GetRateOkResult($resolvedRate));
+    }
+
+    /**
+     * CurrencyCloud returns the rate with their own "pair" setting
+     * So here, we have to transform if the pair doesn't match our need.
+     * Eg: SGD => USD, they always return the USD => SGD rate
+     */
+    private function transformRate(array $rateResponse, string $fromCurrency, string $toCurrency): float
+    {
+        $rate = floatval($rateResponse['mid_market_rate'] ?? $rateResponse['core_rate']);
+
+        if ($fromCurrency.$toCurrency === $rateResponse['currency_pair']) {
+            return $rate;
+        }
+
+        // takes 6 decimal points
+        return round(1 / $rate, 6);
     }
 }

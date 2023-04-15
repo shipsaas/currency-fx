@@ -10,13 +10,14 @@ class CurrencyFxClient
 {
     private Client $client;
 
-    public static function getClient(string $baseUrl): self
+    public static function getClient(string $baseUrl, array $headers = []): self
     {
         $fxClient = new self();
         $fxClient->client = new Client([
             'base_uri' => $baseUrl,
             'headers' => [
                 'User-Agent' => 'CurrencyFxHTTP/1',
+                ...$headers,
             ],
         ]);
 
