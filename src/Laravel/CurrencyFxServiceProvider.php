@@ -23,7 +23,7 @@ class CurrencyFxServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/Configs/currency-fx.php' => config_path('currency-fx.php'),
-        ]);
+        ], 'currency-fx-configs');
     }
 
     public function register(): void
