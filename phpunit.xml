@@ -11,6 +11,7 @@
     </testsuite>
     <testsuite name="CurrencyFxE2ESuite">
       <directory suffix=".php">./tests/E2E</directory>
+      <exclude>./tests/E2E/E2ETestCase.php</exclude>
     </testsuite>
   </testsuites>
   <source>
