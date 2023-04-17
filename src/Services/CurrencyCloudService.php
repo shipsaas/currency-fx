@@ -41,7 +41,7 @@ class CurrencyCloudService implements ExternalCurrencyRateInterface
             ],
         ]);
 
-        if ($authResponse->isOk) {
+        if (!$authResponse->isOk) {
             return false;
         }
 

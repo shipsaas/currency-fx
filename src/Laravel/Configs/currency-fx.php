@@ -3,22 +3,22 @@
 return [
     'drivers' => [
         'exchangeratesapi-io' => [
-            'host' => env('FX_EXCHANGER_RATES_API_IO_HOST', 'https://api.apilayer.com/exchangerates_data'),
+            'host' => env('FX_EXCHANGER_RATES_API_IO_HOST', 'https://api.apilayer.com/exchangerates_data/'),
             'api-key' => env('FX_EXCHANGER_RATES_API_IO_API_KEY'),
         ],
 
         'exchangerate-host' => [
-            'host' => env('FX_EXCHANGER_RATE_HOST_HOST', 'https://api.exchangerate.host/latest'),
+            'host' => env('FX_EXCHANGER_RATE_HOST_HOST', 'https://api.exchangerate.host/'),
             'api-key' => null,
         ],
 
         'fixer-io' => [
-            'host' => env('FX_FIXER_IO_HOST', 'https://api.apilayer.com/fixer'),
+            'host' => env('FX_FIXER_IO_HOST', 'https://api.apilayer.com/fixer/'),
             'api-key' => env('FX_FIXER_IO_API_KEY')
         ],
 
         'currencylayer' => [
-            'host' => env('FX_CURRENCY_LAYER_HOST', 'https://api.apilayer.com/currency_data'),
+            'host' => env('FX_CURRENCY_LAYER_HOST', 'https://api.apilayer.com/currency_data/'),
             'api-key' => env('FX_CURRENCY_LAYER_API_KEY')
         ],
 

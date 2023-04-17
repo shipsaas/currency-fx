@@ -37,12 +37,12 @@ class CurrencyFxClient
 
             $response->isOk = true;
             $response->statusCode = $rawResponse->getStatusCode();
-            $response->response = json_decode($rawResponse->getBody(), true);
+            $response->response = json_decode((string) $rawResponse->getBody(), true);
         } catch (ClientException | ServerException $exception) {
             $response->isOk = false;
             $response->statusCode = $exception->getResponse()->getStatusCode();
             $response->response = json_decode($exception->getResponse()->getBody(), true)
-                ?: ((string) $exception->getResponse()->getBody());
+                ?: [((string) $exception->getResponse()->getBody())];
         }
 
         return $response;
