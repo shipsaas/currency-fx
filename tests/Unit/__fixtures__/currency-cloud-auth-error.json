@@ -1,0 +1,33 @@
+{
+  "error_code": "auth_invalid_user_login_details",
+  "error_messages": {
+    "login_id": [
+      {
+        "code": "login_id_is_required",
+        "message": "login_id is required",
+        "params": {}
+      },
+      {
+        "code": "login_id_is_too_short",
+        "message": "login_id can not be shorter than 1 character(s)",
+        "params": {
+          "minlength": 1
+        }
+      }
+    ],
+    "api_key": [
+      {
+        "code": "api_key_is_required",
+        "message": "api_key is required",
+        "params": {}
+      },
+      {
+        "code": "api_key_length_is_invalid",
+        "message": "api_key should be 64 character(s) long",
+        "params": {
+          "length": 64
+        }
+      }
+    ]
+  }
+}

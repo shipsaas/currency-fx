@@ -1,0 +1,36 @@
+name: Integration Test
+env:
+    TESTING_ENV: ${{ secrets.TESTING_ENV }}
+
+on:
+    pull_request:
+        branches:
+            - 'main'
+        types: [ opened, synchronize, reopened, ready_for_review ]
+    push:
+        branches:
+            - 'main'
+
+jobs:
+    integration:
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@v3
+                if: success()
+
+            -   name: Setup PHP with coverage driver
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: 8.1
+                    coverage: pcov
+
+            -   name: Setup
+                if: success()
+                run: |
+                    composer install --no-interaction
+                    echo "$TESTING_ENV" > .env.testing
+
+            -   name: PHPUnit tests with coverage
+                if: success()
+                run: |
+                    composer test-integration
