@@ -1,6 +1,13 @@
-# PHP Currency FX
+# PHP Currency FX Library
 
-A PHP Library handles Currency FX (rates & conversions) with ease. Available for Laravel too.
+[![codecov](https://codecov.io/gh/shipsaas/currency-fx/branch/main/graph/badge.svg?token=S1RA9XKU94)](https://codecov.io/gh/shipsaas/currency-fx)
+[![Unit Test (PHP 8.1, 8.2)](https://github.com/shipsaas/currency-fx/actions/workflows/unit.yml/badge.svg)](https://github.com/shipsaas/currency-fx/actions/workflows/unit.yml)
+[![Integration Test](https://github.com/shipsaas/currency-fx/actions/workflows/integration.yml/badge.svg)](https://github.com/shipsaas/currency-fx/actions/workflows/integration.yml)
+[![E2E Test](https://github.com/shipsaas/currency-fx/actions/workflows/e2e.yml/badge.svg)](https://github.com/shipsaas/currency-fx/actions/workflows/e2e.yml)
+
+A PHP Library handles Currency FX (rates & conversions) with ease. Battery-included 🔋🔋🔋.
+
+Available for Laravel too.
 
 Tired of implementing these and integrate with 3rd services? Let's CurrencyFX help you to do that. Covered by Unit Testing & battle-tested!
 
@@ -16,6 +23,7 @@ Tired of implementing these and integrate with 3rd services? Let's CurrencyFX he
 
 ## Dependencies
 - Guzzle for API Requests
+- [NeverThrow](https://github.com/shipsaas/never-throw) for straightforward OK/Error response.
 
 ## Usage
 
@@ -23,7 +31,14 @@ Simply initialize the class with the required params. And it is ready to use in 
 
 ```php
 $service = new CurrencyCloudService($host, $loginId, $apiKey);
-$rate = $service->getRates('USD', 'SGD'); // 1.4xxx (float)
+$rateResponse = $service->getRates('USD', 'SGD');
+
+if (!$rateResponse->isOk()) {
+    // failed to get the rate from third party service
+    // do something here
+}
+
+$rate = $rateResponse->getOkResult()->rate; // float (1.4xxx)
 ```
 
 ## Laravel Integration
@@ -49,20 +64,28 @@ We already defined some ENVs key for you to add 😜.
 ### Usage
 
 ```php
+use CurrencyFX\Services\CurrencyLayerService;
+use CurrencyFX\Services\ExchangerRatesApiIoService;
+
 // global access
-app(\CurrencyFX\Services\CurrencyLayerService::class)->getRates('USD', 'EUR');
+app(CurrencyLayerService::class)->getRates('USD', 'EUR');
 
 // DI
 class TransferService
 {
     public function __construct(
-        private \CurrencyFX\Services\ExchangerRatesApiIoService $rateService
+        private ExchangerRatesApiIoService $rateService
     ) {
     }
     
     public function transfer(): TransferResult
     {
-        $rates = $this->rateService->getRates('EUR', 'GBP');
+        $rateRes = $this->rateService->getRates('EUR', 'GBP');
+        if ($rateRes->isError()) {
+            return TransferResult::error(...);
+        }
+
+        $rate = $rateRes->getOkResult()->rate;
     }
 }
 ```
